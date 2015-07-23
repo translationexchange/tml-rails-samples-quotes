@@ -46,5 +46,8 @@ end
 gem 'kaminari'
 
 gem 'dalli'
-gem 'tml', :path => '../tml-ruby'
-gem 'tml-rails', :path => '../tml-rails'
+# gem 'tml', :path => '../tml-ruby'
+# gem 'tml-rails', :path => '../tml-rails'
+
+gem 'tml'
+gem 'tml-rails'

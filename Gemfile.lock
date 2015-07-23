@@ -1,17 +1,3 @@
-PATH
-  remote: ../tml-rails
-  specs:
-    tml-rails (4.4.3)
-      rails (> 3.2)
-      tml (~> 4.4)
-
-PATH
-  remote: ../tml-ruby
-  specs:
-    tml (4.4.6)
-      faraday (~> 0.8)
-      nokogiri (~> 1.5)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -146,6 +132,12 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
+    tml (4.4.7)
+      faraday (~> 0.8)
+      nokogiri (~> 1.5)
+    tml-rails (4.4.3)
+      rails (> 3.2)
+      tml (~> 4.4)
     turbolinks (2.5.3)
       coffee-rails
     tzinfo (1.2.2)
@@ -174,8 +166,8 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   spring
   sqlite3
-  tml!
-  tml-rails!
+  tml
+  tml-rails
   turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
