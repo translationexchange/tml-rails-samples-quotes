@@ -43,6 +43,8 @@ group :development, :test do
   gem 'spring'
 end
 
+gem 'unicorn', '~> 4.8'
+
 gem 'kaminari'
 
 gem 'dalli'
