@@ -1,0 +1,47 @@
+<h1 class="text-center" style="margin-bottom: 20px">
+  <%= tr('Quotes') %>
+  <% if @author %>
+    <div style="font-size:16px; text-align:center; margin-top: 10px;">
+      <%= tr(@author.name) %>
+    </div>
+  <% end %>
+</h1>
+
+<div class="text-center" style="margin-bottom: 20px;">
+  <%= form_tag({:action => :index}, {:method => :get}) do  %>
+    <center>
+      <%= text_field_tag(:search, params[:search], :class => 'form-control', :placeholder => trl('Search'), :style => 'width: 300px') %>
+    </center>
+  <% end %>
+</div>
+
+<div style="margin-bottom: 20px; padding: 5px;">
+  <div class="tml_fltr">
+    <%= paginate @quotes %>
+  </div>
+
+  <%= page_entries_info @quotes %>
+</div>
+
+<table class="table" style="font-size: 20px;">
+  <% @quotes.each do |quote| %>
+    <tr>
+      <td>
+        <%= link_to(quote.quote, {:controller => :quotes, :action => :show, :id => quote.id}) %>
+        <% unless @author %>
+          <div class="text-right" style="margin-top:10px;">
+            <%= link_to(quote.author, {:action => :index, :author => quote.author_id}, :style => 'color: #444; font-size:14px;') %>
+          </div>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<div style="margin-bottom: 100px;">
+  <div class="tml_fltr">
+    <%= paginate @quotes %>
+  </div>
+
+  <%= page_entries_info @quotes %>
+</div>

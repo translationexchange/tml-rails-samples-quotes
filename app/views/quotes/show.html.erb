@@ -1,0 +1,44 @@
+
+<div style="margin-top: 70px; min-height: 350px; margin-bottom: 50px;">
+  <%= tml_source("/quotes/#{@quote.id}") do %>
+    <p class="lead" style="font-size: 40px; margin-bottom: 60px;">
+      <span style="color: #888">"</span><%= tr(@quote.quote) %><span style="color: #888">"</span>
+    </p>
+
+    <p class="text-right" style="font-size: 30px;">
+      <strong><%= link_to(tr(@quote.author), :action => :index, :author => @quote.author_id) %></strong>
+      <%=link_to(image_tag('bing.png', style: 'height: 22px'), "https://www.bing.com/search?q=#{trl(@quote.author)}", style: "font-size: 30px;", target: '_new') %>
+      <%=link_to(image_tag('google.png', style: 'height: 20px'), "https://www.google.com/#q=#{trl(@quote.author)}", style: "font-size: 30px;", target: '_new') %>
+      <%=link_to(image_tag('yandex.png', style: 'height: 20px'), "https://www.yandex.com/search/?text=#{trl(@quote.author)}", style: "font-size: 30px;", target: '_new') %>
+      <%=link_to(image_tag('wikipedia.png', style: 'height: 20px'), "https://www.wikipedia.org/wiki/Special:Search/#{@quote.author}", style: "font-size: 30px;", target: '_new') %>
+    </p>
+  <% end %>
+
+  <% unless @quote.authordata.blank? %>
+    <p class="text-right text-muted" style="font-size: 20px;">
+      <%= tr(@quote.authordata) %>
+    </p>
+  <% end %>
+</div>
+
+<%= tml_source('toolbar') do %>
+  <div style="padding-bottom: 240px;">
+    <div style="float:right">
+      <% if previous_quote(@quote.id) %>
+        <%= link_to(tr('‹ Previous'), {:id => previous_quote(@quote.id)}, :class => 'btn btn-lg btn-primary') %>
+      <% else %>
+        <button class="btn btn-lg" onclick="">
+          <%= tr('‹ Previous') %>
+        </button>
+      <% end %>
+
+      <% if next_quote(@quote.id) %>
+        <%= link_to(tr('Next ›'), {:id => next_quote(@quote.id)}, :class => 'btn btn-lg btn-primary') %>
+      <% else %>
+        <%= link_to(tr('Next ›'), {:id => random_quote.id}, :class => 'btn btn-lg btn-primary') %>
+      <% end %>
+    </div>
+
+  </div>
+<% end %>
+

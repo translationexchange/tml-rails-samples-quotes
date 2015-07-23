@@ -1,0 +1,58 @@
+<h1 class="text-center" style="margin-bottom: 20px">
+  <%= tr('Authors') %>
+</h1>
+
+<div class="text-center" style="margin-bottom: 30px;">
+  <div style="margin-bottom: 20px;">
+    <%= form_tag({:action => :index}, {:method => :get}) do  %>
+      <center>
+        <%= text_field_tag(:search, params[:search], :class => 'form-control', :placeholder => trl('Search'), :style => 'width: 300px') %>
+      </center>
+    <% end %>
+  </div>
+
+  <div style="display:inline-block; width: 3.5%">
+    <% if params[:filter].blank? %>
+      <strong><%= 'All' %></strong>
+    <% else %>
+      <%= link_to('All', {:action => :index}) %>
+    <% end %>
+  </div>
+
+  <%
+    ('A'..'Z').to_a.each do |ch|
+  %>
+    <div style="display:inline-block; width: 3.2%">
+      <% if params[:filter] == ch %>
+        <strong><%= ch %></strong>
+      <% else %>
+        <%= link_to(ch, {:filter => ch}) %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div style="margin-bottom: 20px; padding: 5px;">
+  <div class="tml_fltr">
+    <%= paginate @authors %>
+  </div>
+
+  <%= page_entries_info @authors %>
+</div>
+
+<table class="table" style="font-size: 20px;">
+  <% @authors.each do |author| %>
+    <tr>
+      <td><%= link_to(author.name.blank? ? 'Unkwnown' : author.name, {:controller => :quotes, :action => :index, :author => author.id}) %></td>
+      <td class="text-right"><%= author.quote_count %></td>
+    </tr>
+  <% end %>
+</table>
+
+<div style="margin-bottom: 100px;">
+  <div class="tml_fltr">
+    <%= paginate @authors %>
+  </div>
+
+  <%= page_entries_info @authors %>
+</div>
