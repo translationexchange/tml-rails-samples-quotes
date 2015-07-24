@@ -32,7 +32,16 @@
           <li class="<%= 'active' if controller.controller_name == 'authors' %>"><%= link_to(tr('Authors'), :controller => :authors) %></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><%= tml_language_selector_tag('bootstrap', element: 'li', toggle: true) %></li>
+          <li>
+            <a href='javascript:void(0);' onclick='Tml.Utils.toggleInlineTranslations()'>
+              <% if Tml.session.inline_mode? %>
+                <%= tr('Disable Translation Mode') %>
+              <% else %>
+                <%= tr('Help Us Translate') %>
+              <% end %>
+            </a>
+          </li>
+          <li><%= tml_language_selector_tag('bootstrap', element: 'li') %></li>
         </ul>
       </div><!-- /.nav-collapse -->
     </div><!-- /.container -->
