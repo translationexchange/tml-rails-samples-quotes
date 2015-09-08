@@ -51,8 +51,11 @@ gem 'unicorn', '~> 4.8'
 gem 'kaminari'
 
 gem 'dalli'
+
+# gem 'tml', :git => 'git://github.com/translationexchange/tml-ruby.git'
+# gem 'tml-rails', :git => 'git://github.com/translationexchange/tml-rails.git'
+
 # gem 'tml', :path => '../tml-ruby'
 # gem 'tml-rails', :path => '../tml-rails'
 
-gem 'tml'
 gem 'tml-rails'
