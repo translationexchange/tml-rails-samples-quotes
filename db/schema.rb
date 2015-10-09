@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150723015508) do
+ActiveRecord::Schema.define(version: 20151007015042) do
 
   create_table "authors", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -23,6 +23,19 @@ ActiveRecord::Schema.define(version: 20150723015508) do
 
   add_index "authors", ["id"], name: "sqlite_autoindex_authors_1", unique: true
   add_index "authors", ["name"], name: "index_authors_on_name"
+
+  create_table "quote_translations", force: :cascade do |t|
+    t.integer  "quote_id",   null: false
+    t.string   "locale",     null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text     "quote"
+    t.string   "author"
+    t.text     "authordata"
+  end
+
+  add_index "quote_translations", ["locale"], name: "index_quote_translations_on_locale"
+  add_index "quote_translations", ["quote_id"], name: "index_quote_translations_on_quote_id"
 
   create_table "quotes", force: :cascade do |t|
     t.text    "quote",                               null: false
