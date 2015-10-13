@@ -1,12 +1,14 @@
-PATH
-  remote: ../tml-rails
+GIT
+  remote: git://github.com/translationexchange/tml-rails.git
+  revision: a9a900d520b2acb574fa12d541841e27ee0ea7d0
   specs:
     tml-rails (5.1.0)
       rails (> 3.2)
       tml (~> 5.0)
 
-PATH
-  remote: ../tml-ruby
+GIT
+  remote: git://github.com/translationexchange/tml-ruby.git
+  revision: 73af2101822b402249c6abada13b28e958f74d39
   specs:
     tml (5.1.2)
       faraday (~> 0.8)
@@ -66,7 +68,7 @@ GEM
     debug_inspector (0.0.2)
     erubis (2.7.0)
     execjs (2.6.0)
-    faraday (0.9.1)
+    faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
