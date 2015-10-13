@@ -3,38 +3,43 @@ namespace :quotes do
   desc 'Exports quotes to the system'
   task :export => :environment do
     buffer = []
+    buffer_size = 50
 
     Tml.session.init
 
     options = {
-      batch: true
+      realtime: true
     }
 
     index = 0
     Quote.find_each do |quote|
-      # pp "#{index}. #{quote.quote}"
       index += 1
 
       buffer << {
-        :source => "/quotes/#{quote.id}",
-        :keys => [{
-          :label => quote.author,
-          :locale => 'en'
+        source: {
+          name: "Quote #{quote.id}",
+          id: "/quotes/#{quote.id}"
+        },
+        keys: [{
+          label:  quote.author,
+          locale: 'en',
+          id:     "/quotes/#{quote.id}/author"
         }, {
-          :label => quote.quote,
-          :locale => 'en'
+          label:  quote.quote,
+          locale: 'en',
+          id:     "/quotes/#{quote.id}/quote"
         }]
       }
 
-      if index % 100 == 0
+      if index % buffer_size == 0
         pp "Submitting #{index-0}-#{index} sources..."
-        Tml.session.application.api_client.post('sources/register_keys', {:source_keys => buffer.to_json, :options => options.to_json})
+        pp register_keys(buffer, options)
         buffer = []
       end
     end
 
     if buffer.size > 0
-      Tml.session.application.api_client.post('sources/register_keys', {:source_keys => buffer.to_json, :options => options.to_json})
+      register_keys(buffer, options)
     end
   end
 
@@ -42,9 +47,34 @@ namespace :quotes do
   task :import => :environment do
     Tml.session.init
 
-    data = Tml.session.application.api_client.post('sources/sync_translations', {:since => Time.now - 10.days, :locales => ['ru']})
+    data = Tml.session.application.api_client.get('sources/sync_translations', {:since => Time.now - 10.days, :locales => ['ru']})
     pp data
+  end
 
+private
+
+
+  # Response:
+  # {
+  #   :source => {
+  #     :id => "/quotes/#{quote.id}",
+  #     :key => "dsklfsadfjaslkdjfalksjdflaksjdf"
+  #   },
+  #   :keys => [{
+  #     :id     => "/quotes/#{quote.id}/author",
+  #     :key    => "sadlfkjasdljfkalskdjflaksjdflkajdfl"
+  #   }, {
+  #     :id     => "/quotes/#{quote.id}/quote",
+  #     :key    => "sadlfkjasdljfkalskdjflaksjdflkajdfl"
+  #   }]
+  # }
+  def register_keys(buffer, options)
+    Tml.session.application.api_client.post(
+      'sources/register_keys', {
+        :source_keys => buffer.to_json,
+        :options => options.to_json
+      }
+    )
   end
 
 end

@@ -16,15 +16,15 @@ Tml.configure do |config|
   else
     config.application = {
       host: 'http://localhost:3000',
-      key: '6cd9e826957f6aafb920fc7394dbeab5d9e4833cc8e3f3dfc2ab66ce36ce6652',
-      token: '004df551a2484696b9a7b8612e466db942bc253e6e677fe306a37ae0e951f9e8'
+      key: '4668488ca90498b71b1d98ee6a193eb618e6bd75b0388714254fc6689ac38990',
+      token: '971bb4c54c86ffeea987678e1861e5e8499da76f07f9faf4931da45b973ce03a'
     }
 
     config.cache = {
       enabled:   true,
       adapter:   'memcache',
       host:      'localhost:11211',
-      namespace: '6cd9e826957f6aafb920fc7394dbeab5d9e4833cc8e3f3dfc2ab66ce36ce6652'
+      namespace: '4668488ca90498b71b1d98ee6a193eb618e6bd75b0388714254fc6689ac38990'
     }
   end
 
