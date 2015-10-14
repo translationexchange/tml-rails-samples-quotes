@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def use_globalize?
+    Rails.env.development?
+  end
+
   def page_entries_info(collection, options = {})
     entry_name = options[:entry_name] || collection.entry_name
 
