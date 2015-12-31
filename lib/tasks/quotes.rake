@@ -1,5 +1,10 @@
 namespace :quotes do
 
+
+  # bundle exec rake tml:export quotes quote author  ---- filtering params
+  # bundle exec rake tml:import quotes quote author  ---- last sync date, locales
+
+
   desc 'Exports quotes to Translation Exchange'
   task :export => :environment do
     init_tml
@@ -10,7 +15,7 @@ namespace :quotes do
     # if you don't need to get the response data to store for reference
     # then this can be set to false
     options = {
-      realtime: false
+        realtime: false
     }
 
     index = 0
@@ -19,27 +24,27 @@ namespace :quotes do
 
       # Quotes consist of 3 parts that need translations: quote, author, authordata
       quote_attributes = {
-        source: {
-          name: "Quote #{quote.id}",
-          id: "/quotes/#{quote.id}"
-        },
-        keys: [{
-          label:  quote.author,
-          locale: 'en',
-          id:     "/quotes/#{quote.id}/author"
-        }, {
-          label:  quote.quote,
-          locale: 'en',
-          id:     "/quotes/#{quote.id}/quote"
-        }]
+          source: {
+              name: "Quote #{quote.id}",
+              id: "/quotes/#{quote.id}"
+          },
+          keys: [{
+                     label: quote.author,
+                     locale: 'en',
+                     id: "/quotes/#{quote.id}/author"
+                 }, {
+                     label: quote.quote,
+                     locale: 'en',
+                     id: "/quotes/#{quote.id}/quote"
+                 }]
       }
 
       # if author data is present submit it as well
       unless quote.authordata.blank?
         quote_attributes[:keys] << {
-          label:  quote.authordata,
-          locale: 'en',
-          id:     "/quotes/#{quote.id}/authordata"
+            label: quote.authordata,
+            locale: 'en',
+            id: "/quotes/#{quote.id}/authordata"
         }
       end
 
@@ -61,8 +66,21 @@ namespace :quotes do
   task :import => :environment do
     init_tml
 
+    interval_start = Date.today - 100.days
+    interval_end = Date.today - 20.days
+
     # paginate through results
-    data = fetch_translations(Time.now - 1.day, ['ru'])
+    params = {since: interval_start, locales: ['ru'], source: 'quotes', machine: true}
+    # params = {
+      # since: interval_start, until: interval_end, locales: ['zh-CN'], source: 'tags', translators: '1,2,3,4',
+      # machine: true
+      # purchase: true,
+    # }
+
+    # paginate through results
+    data = fetch_translations(params)
+
+    pp data
 
     imported = 0
     while data['pagination']['current_page'] <= data['pagination']['total_pages']
@@ -82,20 +100,25 @@ namespace :quotes do
         end
       end
 
-      data = fetch_translations(Time.now - 1.day, ['ru'], data['pagination']['current_page'] + 1)
+      data = fetch_translations(params, data['pagination']['current_page'] + 1)
     end
 
     pp "Total imported #{imported} translations..."
   end
 
-private
+  private
 
   # Initializes TML library
   def init_tml
-    Tml.session.init({
-      key: 'f7d329c5a48db5f4f2e80b5ca02d7bda3a8b8cceb909c8a053fa7353e159b97f',
-      token: '11bd807945dc6d0bfc678ef5b86025118485dfc8c60f92605b998a5657a0343e'
-    })
+    # Tml.session.init(
+    #     key: '6cd9e826957f6aafb920fc7394dbeab5d9e4833cc8e3f3dfc2ab66ce36ce6652',
+    #     token: '2ae0094a9844e5f2757cb7f1617831051651b36a8029d41f7c477d4d917a2063'
+    # )
+    Tml.session.init(
+        key: 'bff404e8b11d5870851586ece0934ab3bdb120744ca2eaf821db0b3690a6d7fa',
+        token: '3042d6a7d0569cbd8d09ffff247dcdb6e89b326d73cd2c9f8586506dc94b03c8',
+        host: 'http://localhost:3000'
+    )
   end
 
   # Registers keys on Translation Exchange
@@ -115,22 +138,20 @@ private
   # }
   def register_keys(buffer, options)
     Tml.session.application.api_client.post(
-      'sources/register_keys', {
-        :source_keys => buffer.to_json,
-        :options => options.to_json
-      }
+        'sources/register_keys', {
+                                   :source_keys => buffer.to_json,
+                                   :options => options.to_json
+                               }
     )
   end
 
   # Fetches translations from Translation Exchange
-  def fetch_translations(since, locales, page = 1)
-    JSON.parse(Tml.session.application.api_client.get(
-        'sources/sync_translations', {
-          :since => since,
-          :locales => locales,
-          :page => page
-        }, {raw: true}
-      )
+  def fetch_translations(params, page = 1)
+    JSON.parse(
+        Tml.session.application.api_client.get(
+            'sources/sync_translations', params.merge(page: page), {raw: true}
+        )
     )
   end
+
 end

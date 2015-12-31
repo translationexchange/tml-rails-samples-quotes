@@ -16,17 +16,23 @@ Tml.configure do |config|
   else
     config.application = {
       host: 'http://localhost:3000',
-      key: '4668488ca90498b71b1d98ee6a193eb618e6bd75b0388714254fc6689ac38990',
-      token: '971bb4c54c86ffeea987678e1861e5e8499da76f07f9faf4931da45b973ce03a'
+      key: '6cd9e826957f6aafb920fc7394dbeab5d9e4833cc8e3f3dfc2ab66ce36ce6652',
+      token: '2ae0094a9844e5f2757cb7f1617831051651b36a8029d41f7c477d4d917a2063'
     }
 
     config.cache = {
-      enabled:   true,
+      enabled:   false,
       adapter:   'memcache',
       host:      'localhost:11211',
-      namespace: '4668488ca90498b71b1d98ee6a193eb618e6bd75b0388714254fc6689ac38990'
+      namespace: '6cd9e826957f6aafb920fc7394dbeab5d9e4833cc8e3f3dfc2ab66ce36ce6652'
     }
   end
+
+  config.agent = {
+      enabled:  true,
+      type:     'agent',
+      host:     'http://localhost:8282/dist/agent.js'
+  }
 
   config.logger  = {
     :enabled  => true,
