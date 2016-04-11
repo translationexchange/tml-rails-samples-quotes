@@ -115,9 +115,9 @@ namespace :quotes do
     #     token: '2ae0094a9844e5f2757cb7f1617831051651b36a8029d41f7c477d4d917a2063'
     # )
     Tml.session.init(
-        host: 'http://localhost:3000',
-        key: '6cd9e826957f6aafb920fc7394dbeab5d9e4833cc8e3f3dfc2ab66ce36ce6652',
-        token: '2ae0094a9844e5f2757cb7f1617831051651b36a8029d41f7c477d4d917a2063'
+        key: 'b8afb48f57d37187479ed2c07f780378b32221e011d851c7ed1b2ec9cbc0d095',
+        token: '38e8dca6d96f79d27afc58568d50b8bb7f03eff7a8ed7a9f3b87d6755d8e6aa3',
+        host: 'http://localhost:3000'
     )
   end
 
