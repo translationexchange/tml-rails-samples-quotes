@@ -52,7 +52,7 @@ gem 'kaminari'
 
 gem 'dalli'
 
-gem 'tml', :git => 'git://github.com/translationexchange/tml-ruby.git'
+# gem 'tml', :git => 'git://github.com/translationexchange/tml-ruby.git'
 gem 'tml-rails', :git => 'git://github.com/translationexchange/tml-rails.git'
 
 # gem 'tml', :path => '../tml-ruby'
