@@ -115,8 +115,8 @@ namespace :quotes do
     #     token: '2ae0094a9844e5f2757cb7f1617831051651b36a8029d41f7c477d4d917a2063'
     # )
     Tml.session.init(
-        key: 'bff404e8b11d5870851586ece0934ab3bdb120744ca2eaf821db0b3690a6d7fa',
-        token: '3042d6a7d0569cbd8d09ffff247dcdb6e89b326d73cd2c9f8586506dc94b03c8',
+        key: 'b8afb48f57d37187479ed2c07f780378b32221e011d851c7ed1b2ec9cbc0d095',
+        token: '38e8dca6d96f79d27afc58568d50b8bb7f03eff7a8ed7a9f3b87d6755d8e6aa3',
         host: 'http://localhost:3000'
     )
   end
@@ -137,12 +137,14 @@ namespace :quotes do
   #   }]
   # }
   def register_keys(buffer, options)
-    Tml.session.application.api_client.post(
-        'sources/register_keys', {
-                                   :source_keys => buffer.to_json,
-                                   :options => options.to_json
-                               }
-    )
+    Tml.session.with_block_options(:live => true) do
+      Tml.session.application.api_client.post(
+          'sources/register_keys', {
+                                     :source_keys => buffer.to_json,
+                                     :options => options.to_json
+                                 }
+      )
+    end
   end
 
   # Fetches translations from Translation Exchange
